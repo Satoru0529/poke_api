@@ -7,10 +7,10 @@ part 'pokemon.g.dart';
 @freezed
 abstract class Pokemon with _$Pokemon {
   const factory Pokemon({
-    required int id,
-    required String name,
-    required List<String> type,
-    required String image,
+    @Default(0) int id,
+    @Default("") String name,
+    @Default([]) List<String> type,
+    @Default("") String imageUrl,
   }) = _Pokemon;
 
   factory Pokemon.fromJson(Map<String, dynamic> json) =>
