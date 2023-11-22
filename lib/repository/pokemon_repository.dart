@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/string.dart';
-import '../../model/pokemon/pokemon.dart';
+import '../core/string.dart';
+import '../model/pokemon.dart';
 
 final pokemonRepositoryProvider = Provider((ref) => PokemonRepository());
 
