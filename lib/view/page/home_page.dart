@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pokemon_book/view_model/home_page_notifier.dart';
+import 'package:pokemon_book/view_model/pokemon_list_notifier.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -13,7 +13,7 @@ class HomePage extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('Home'),
         ),
-        body: state.when(
+        body: state.pokemonListState.when(
           data: (pokemonList) => Center(
             child: ListView.builder(
               itemCount: pokemonList.length,
