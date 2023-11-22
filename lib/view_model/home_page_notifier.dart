@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/pokemon.dart';
 import '../repository/pokemon_repository.dart';
 
+final pokemonRepositoryProvider = Provider((ref) => PokemonRepository());
+
 final pokemonListProvider =
     StateNotifierProvider<PokemonListNotifier, AsyncValue<List<Pokemon>>>(
         (ref) {
