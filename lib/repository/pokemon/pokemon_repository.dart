@@ -6,8 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:pokemon_book/core/string.dart';
 import 'package:pokemon_book/model/pokemon.dart';
 
+final pokemonRepositoryProvider = Provider((ref) => PokemonRepository());
+
 class PokemonRepository {
-  static Future<AsyncValue<List<Pokemon>>> fetchPokemonList() async {
+  PokemonRepository();
+
+  Future<AsyncValue<List<Pokemon>>> fetchPokemonList() async {
     final pokemonList = <Pokemon>[];
 
     for (var id = 1; id <= 151; id++) {
