@@ -1,19 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../model/pokemon.dart';
 import '../repository/pokemon_repository.dart';
-import 'pokemon_list_state.dart';
 
 final pokemonRepositoryProvider = Provider((ref) => PokemonRepository());
 
 final pokemonListProvider =
-    StateNotifierProvider<PokemonListNotifier, PokemonListState>((ref) {
+    StateNotifierProvider<PokemonListNotifier, AsyncValue<List<Pokemon>>>(
+        (ref) {
   return PokemonListNotifier(ref: ref);
 });
 
-class PokemonListNotifier extends StateNotifier<PokemonListState> {
+class PokemonListNotifier extends StateNotifier<AsyncValue<List<Pokemon>>> {
   PokemonListNotifier({required Ref ref})
       : _ref = ref,
-        super(const PokemonListState()) {
+        super(const AsyncValue.loading()) {
     fetchPokemonList();
   }
 

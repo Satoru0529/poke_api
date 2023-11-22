@@ -13,12 +13,25 @@ class HomePage extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('Home'),
         ),
-        body: state.pokemonListState.when(
+        body: state.when(
           data: (pokemonList) => Center(
             child: ListView.builder(
               itemCount: pokemonList.length,
               itemBuilder: (context, index) {
-                return Text(pokemonList[index].name);
+                return Card(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Image.network(
+                        pokemonList[index].imageUrl,
+                        width: 100,
+                        height: 100,
+                      ),
+                      Text(pokemonList[index].name),
+                    ],
+                  ),
+                ));
               },
             ),
           ),

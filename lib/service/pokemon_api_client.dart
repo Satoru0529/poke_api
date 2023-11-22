@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../core/string.dart';
 import '../model/pokemon.dart';
 
 class PokemonApiClient {
@@ -14,14 +13,21 @@ class PokemonApiClient {
     final pokemonList = <Pokemon>[];
 
     for (var id = 1; id <= 10; id++) {
-      final res = await dio.get('$pokeApiRoute/pokemon-species/$id');
+      // 同時に両方のAPIからデータを取得
+      final responses = await Future.wait([
+        dio.get('https://pokeapi.co/api/v2/pokemon/$id'),
+        dio.get('https://pokeapi.co/api/v2/pokemon-species/$id')
+      ]);
 
-      if (res.statusCode == 200) {
+      final pokemonData = responses[0].data;
+      final speciesData = responses[1].data;
+
+      if (responses[0].statusCode == 200 && responses[1].statusCode == 200) {
         try {
-          var pokemon = Pokemon.fromJson(res.data);
+          var pokemon = Pokemon.fromJson(pokemonData);
 
           /// pokemonのnameをjapaneseNameに置き換える
-          final names = res.data['names'];
+          final names = speciesData['names'];
           final jaName = names.firstWhere(
               (name) => name['language']['name'] == 'ja',
               orElse: () => null);

@@ -1,18 +1,44 @@
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+class Pokemon {
+  final int id;
+  final String name;
+  final List<String> types;
+  final String imageUrl;
 
-part 'pokemon.freezed.dart';
-part 'pokemon.g.dart';
+  Pokemon({
+    required this.id,
+    required this.name,
+    required this.types,
+    required this.imageUrl,
+  });
 
-@freezed
-abstract class Pokemon with _$Pokemon {
-  const factory Pokemon({
-    @Default(0) int id,
-    @Default("") String name,
-    @Default([]) List<String> type,
-    @Default("") String imageUrl,
-  }) = _Pokemon;
+  factory Pokemon.fromJson(Map<String, dynamic> json) {
+    List<String> typesToList(dynamic types) {
+      List<String> ret = [];
+      for (int i = 0; i < types.length; i++) {
+        ret.add(types[i]['type']['name']);
+      }
+      return ret;
+    }
 
-  factory Pokemon.fromJson(Map<String, dynamic> json) =>
-      _$PokemonFromJson(json);
+    return Pokemon(
+      id: json['id'],
+      name: json['name'],
+      types: typesToList(json['types']),
+      imageUrl: json['sprites']['other']['official-artwork']['front_default'],
+    );
+  }
+
+  Pokemon copyWith({
+    int? id,
+    String? name,
+    List<String>? types,
+    String? imageUrl,
+  }) {
+    return Pokemon(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      types: types ?? this.types,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
 }
