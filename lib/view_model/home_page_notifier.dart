@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../model/pokemon.dart';
+import '../model/pokemon/pokemon.dart';
 import '../repository/pokemon/pokemon_repository.dart';
 
 final pokemonListProvider =
