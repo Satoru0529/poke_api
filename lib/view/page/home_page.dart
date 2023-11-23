@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pokemon_book/view_model/pokemon_list_notifier.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pokemon_book/view_model/pokemon_list_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -18,20 +19,24 @@ class HomePage extends ConsumerWidget {
             child: ListView.builder(
               itemCount: pokemonList.length,
               itemBuilder: (context, index) {
-                return Card(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Image.network(
-                        pokemonList[index].imageUrl,
-                        width: 100,
-                        height: 100,
-                      ),
-                      Text(pokemonList[index].name),
-                    ],
-                  ),
-                ));
+                return GestureDetector(
+                  onTap: () =>
+                      context.push('/detail', extra: pokemonList[index]),
+                  child: Card(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Image.network(
+                          pokemonList[index].imageUrl,
+                          width: 100,
+                          height: 100,
+                        ),
+                        Text(pokemonList[index].name),
+                      ],
+                    ),
+                  )),
+                );
               },
             ),
           ),
